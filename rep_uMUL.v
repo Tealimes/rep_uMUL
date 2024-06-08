@@ -1,0 +1,46 @@
+`include "sobolrng.v"
+
+module rep_uMUL #(
+    parameter BITWIDTH = 8
+) (
+    input wire iClk,
+    input wire iRstN,
+    input wire [BITWIDTH-1: 0] A,
+    input wire [BITWIDTH-1:0] B,
+    input wire iEn,
+    input wire loadB,
+    input wire iClr,
+    output reg [BITWIDTH - 1: 0] mult
+);
+
+    reg [BITWIDTH-1:0] iB_buff; //to store a value in block so reg
+    wire [BITWIDTH-1:0] sobolseq;
+
+    always@(posedge iClk or negedge iRstN) begin
+        if(~iRstN) begin
+            iB_buff <= 0;
+        end else begin
+            if(loadB) begin
+                iB_buff <= B;
+            end else begin
+                iB_buff <= iB_buff;
+            end
+        end
+    end
+
+    sobolrng #(
+        .BITWIDTH(BITWIDTH)
+    ) u_sobolrng (
+        .iClk(iClk),
+        .iRstN(iRstN),
+        .iEn(iEn),
+        .iClr(iClr),
+        .sobolseq(sobolseq)
+    );
+
+    always@(*) begin
+        mult <= A & (iB_buff > sobolseq);
+    end
+
+
+endmodule
