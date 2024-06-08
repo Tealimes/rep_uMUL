@@ -5,12 +5,12 @@ module rep_uMUL_tb();
 
     logic iClk;
     logic iRstN;
-    logic [BITWIDTH - 1: 0] A;
+    logic A;
     logic [BITWIDTH - 1: 0] B;
     logic loadB;
     logic iEn;
     logic iClr;
-    logic [BITWIDTH - 1: 0] mult;
+    logic mult;
 
     rep_uMUL #(
         .BITWIDTH(BITWIDTH)
@@ -33,9 +33,9 @@ module rep_uMUL_tb();
 
         iClk = 1;
         iRstN = 0;
-        B = 128;
+        B = 157;
         loadB = 0;
-        A = 134;
+        A = 0;
         iEn = 0;
         iClr = 0;
 
@@ -50,16 +50,19 @@ module rep_uMUL_tb();
 
         #50; 
         iEn = 1;
+        A = 1;
         repeat(500) begin
             #10;
+            A = ~A;
         end
 
         iEn = 0;
+        A = 0;
         repeat(500) begin
             #10;
         end
 
-        iClr = 400;
+        iClr = 1;
         #400
 
         $finish;
