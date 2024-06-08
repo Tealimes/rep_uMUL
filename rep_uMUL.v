@@ -5,12 +5,12 @@ module rep_uMUL #(
 ) (
     input wire iClk,
     input wire iRstN,
-    input wire [BITWIDTH-1: 0] A,
+    input wire A,
     input wire [BITWIDTH-1:0] B,
     input wire iEn,
     input wire loadB,
     input wire iClr,
-    output reg [BITWIDTH - 1: 0] mult
+    output reg mult
 );
 
     reg [BITWIDTH-1:0] iB_buff; //to store a value in block so reg
