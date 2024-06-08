@@ -8,7 +8,6 @@ module rep_uMUL_tb();
     logic A;
     logic [BITWIDTH - 1: 0] B;
     logic loadB;
-    logic iEn;
     logic iClr;
     logic mult;
 
@@ -19,7 +18,6 @@ module rep_uMUL_tb();
         .iRstN(iRstN),
         .A(A),
         .B(B),
-        .iEn(iEn),
         .loadB(loadB),
         .iClr(iClr),
         .mult(mult)
@@ -36,11 +34,11 @@ module rep_uMUL_tb();
         B = 157;
         loadB = 0;
         A = 0;
-        iEn = 0;
         iClr = 0;
 
         #15;
         iRstN = 1;
+        
 
         #10;
         loadB = 1;
@@ -49,14 +47,12 @@ module rep_uMUL_tb();
         loadB = 0;
 
         #50; 
-        iEn = 1;
         A = 1;
+        
         repeat(500) begin
             #10;
-            A = ~A;
         end
 
-        iEn = 0;
         A = 0;
         repeat(500) begin
             #10;
