@@ -9,7 +9,24 @@ module rep_uMUL_tb();
     logic [BITWIDTH - 1: 0] B;
     logic loadB;
     logic iClr;
-    logic mult;
+    reg mult;
+
+    //creates a stochastic number inside testbench
+    logic [BITWIDTH-1:0] sobolseq_tb;
+    logic [BITWIDTH-1:0] rand_a;
+
+    //used to calculate result
+    logic [BITWIDTH-1:0] result;
+
+    //calculates end result
+    always@(posedge iClk or negedge iRstN) begin
+        if(~iRstN) begin
+            result <= 0;
+        end else begin
+            result <= result + 1;
+        end
+    end
+
 
     rep_uMUL #(
         .BITWIDTH(BITWIDTH)
@@ -23,6 +40,16 @@ module rep_uMUL_tb();
         .mult(mult)
     );
 
+    sobolrng #(
+        .BITWIDTH(BITWIDTH)
+    ) u_sobolrng_tb (
+        .iClk(iClk),
+        .iRstN(iRstN),
+        .iEn(1),
+        .iClr(iClr),
+        .sobolseq(sobolseq_tb)
+    );
+
     //defines clk
     always #5 iClk = ~iClk;
 
@@ -30,36 +57,23 @@ module rep_uMUL_tb();
         $dumpfile("rep_uMUL.vcd"); $dumpvars;
 
         iClk = 1;
-        iRstN = 0;
-        B = 157;
-        loadB = 0;
+        B = $urandom_range(255);
         A = 0;
+        rand_a = $urandom_range(255);
+        iRstN = 0;
         iClr = 0;
-
-        #15;
-        iRstN = 1;
-        
-
-        #10;
         loadB = 1;
 
         #10;
-        loadB = 0;
+        iRstN = 1;
 
-        #50; 
-        A = 1;
+        repeat(500) begin
+          #10;  
+          A = (rand_a > sobolseq_tb);
+        end
         
-        repeat(500) begin
-            #10;
-        end
-
-        A = 0;
-        repeat(500) begin
-            #10;
-        end
-
         iClr = 1;
-        #400
+        #400;
 
         $finish;
     end
