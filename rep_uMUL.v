@@ -6,7 +6,7 @@ module rep_uMUL #(
     input wire iClk,
     input wire iRstN,
     input wire A,
-    input wire [BITWIDTH-1:0] B,
+    input wire [BITWIDTH - 1: 0] B,
     input wire loadB,
     input wire iClr,
     output reg mult
@@ -24,6 +24,7 @@ module rep_uMUL #(
             end else begin
                 iB_buff <= iB_buff;
             end
+            
         end
     end
 
@@ -32,7 +33,7 @@ module rep_uMUL #(
     ) u_sobolrng (
         .iClk(iClk),
         .iRstN(iRstN),
-        .iEn(A),
+        .iEn(A), 
         .iClr(iClr),
         .sobolseq(sobolseq)
     );
@@ -40,6 +41,7 @@ module rep_uMUL #(
     always@(*) begin
         mult <= A & (iB_buff > sobolseq);
     end
+
 
 
 endmodule
