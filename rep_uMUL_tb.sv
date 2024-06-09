@@ -16,14 +16,32 @@ module rep_uMUL_tb();
     logic [BITWIDTH-1:0] rand_a;
 
     //used to calculate result
-    logic [BITWIDTH-1:0] result;
+    logic [BITWIDTH-1:0] num; //numerator 
+    logic [BITWIDTH-1:0] denom; //denominator
 
     //calculates end result
     always@(posedge iClk or negedge iRstN) begin
         if(~iRstN) begin
-            result <= 0;
+            num <= 0;
         end else begin
-            result <= result + 1;
+            num <= num + mult;
+        end
+    end
+
+    always@(posedge iClk or negedge iRstN) begin
+        if(~iRstN) begin
+            denom <= 0;
+        end else begin
+            denom <= denom + mult;
+        end
+    end
+    always@(posedge iClk or negedge iRstN) begin
+        if(~iRstN) begin
+            denom <= 0;
+        end else begin
+            if(~iClr) begin 
+                denom <= denom + 1;
+            end
         end
     end
 
@@ -67,8 +85,8 @@ module rep_uMUL_tb();
         #10;
         iRstN = 1;
 
-        repeat(500) begin
-          #10;  
+        repeat(10) begin
+          #10;
           A = (rand_a > sobolseq_tb);
         end
         
