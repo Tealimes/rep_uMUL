@@ -14,7 +14,6 @@ module rep_uMUL #(
 
     reg [BITWIDTH-1:0] iB_buff; //to store a value in block so reg
     wire [BITWIDTH-1:0] sobolseq;
-    reg [BITWIDTH -1: 0] test;
 
     always@(posedge iClk or negedge iRstN) begin
         if(~iRstN) begin
