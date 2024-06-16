@@ -1,4 +1,5 @@
 `include "rep_uMUL.v"
+`include "sobolrng.v"
 `define TESTAMOUNT 10
 
 module rep_uMUL_tb();
