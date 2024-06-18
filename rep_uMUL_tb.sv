@@ -3,6 +3,7 @@
 `include "rep_uMUL.v"
 `define TESTAMOUNT 10 //change for number of bitstreams tested
 
+//used to check erors
 class errorcheck;
     real uResult;
     real eResult;
@@ -29,7 +30,7 @@ class errorcheck;
     endfunction 
 
     function fSUM();
-        $display("Run %f results: ", i); 
+        $display("Run %.0f results: ", i); 
         uResult = (fnum/fdenom);
         eResult = (cntrA / fdenom) * (cntrB / fdenom);
 
@@ -65,7 +66,7 @@ module rep_uMUL_tb();
     logic oB;
     reg oMult;
     
-    errorcheck error;
+    errorcheck error; //class for error checking
     real num; //counts output's 1s
     real cntA; //counts As
     real cntB; //counts Bs
@@ -176,9 +177,10 @@ module rep_uMUL_tb();
             denom = 0;
             cntA = 0;
             cntB = 0;
-            iB = $urandom_range(0,255);
-            rand_A = $urandom_range(0,255);
+            iB = $urandom_range(255);
+            rand_A = $urandom_range(255);
             
+
             repeat(256) begin
                 #10;
                 iA = (rand_A > sobolseq_tbA);
@@ -188,6 +190,7 @@ module rep_uMUL_tb();
             error.fSUM();        
         end
         
+        //gives final eror results
         error.fMSE();
         error.fRMSE();
         
