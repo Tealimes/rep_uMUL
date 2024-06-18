@@ -114,7 +114,7 @@ module rep_uMUL_tb();
     //takes output of B from uMUL.v
     always@(posedge iClk or negedge iRstN) begin
         if(~iRstN) begin
-            cntA <= 0;
+            cntB <= 0;
         end else begin
             if(~iClr) begin 
                     cntB <= cntB + oB;
@@ -127,7 +127,7 @@ module rep_uMUL_tb();
     //used for bitstream generation
     logic [BITWIDTH-1:0] sobolseq_tbA;
     logic [BITWIDTH-1:0] rand_A;
-    logic [BITWIDTH - 1: 0] iB;
+    logic [BITWIDTH-1: 0] iB;
 
     //generates number for comparison with number rand_A
     sobolrng #(
