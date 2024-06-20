@@ -1,17 +1,19 @@
-`include "sobolrng.v"
+//By Alexander Peacock
+//email: alexpeacock56ten@gmail.com
 
+`include "sobolrng.v"
 
 module rep_uMUL #(
     parameter BITWIDTH = 8
 ) (
     input wire iClk,
     input wire iRstN,
-    input wire A,
-    input wire [BITWIDTH - 1: 0] B,
+    input wire iA,
+    input wire [BITWIDTH - 1: 0] iB,
     input wire loadB,
     input wire iClr,
-    output reg oB, //delete maybe
-    output reg mult
+    output reg oB, 
+    output reg oMult
 );
 
     reg [BITWIDTH-1:0] iB_buff; //to store a value in block so reg
@@ -22,7 +24,7 @@ module rep_uMUL #(
             iB_buff <= 0;
         end else begin
             if(loadB) begin
-                iB_buff <= B;
+                iB_buff <= iB;
             end else begin
                 iB_buff <= iB_buff;
             end
@@ -35,16 +37,13 @@ module rep_uMUL #(
     ) u_sobolrng (
         .iClk(iClk),
         .iRstN(iRstN),
-        .iEn(A), 
+        .iEn(iA), 
         .iClr(iClr),
         .sobolseq(sobolseq)
     );
 
     always@(*) begin
         oB <= (iB_buff > sobolseq);
-        mult <= A & (iB_buff > sobolseq);
+        oMult <= iA & (iB_buff > sobolseq);
     end
-
-
-
 endmodule
