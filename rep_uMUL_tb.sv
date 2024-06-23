@@ -125,7 +125,7 @@ module rep_uMUL_tb();
     end
     // end here
 
-    //generates number for comparison with number rand_A
+    //generates bitstream for comparison with number rand_A
     sobolrng #(
         .BITWIDTH(BITWIDTH)
     ) u_sobolrng_tbA (
