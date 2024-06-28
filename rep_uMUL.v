@@ -12,7 +12,6 @@ module rep_uMUL #(
     input wire [BITWIDTH - 1: 0] iB,
     input wire loadB,
     input wire iClr,
-    output reg oB, 
     output reg oMult
 );
 
@@ -43,7 +42,6 @@ module rep_uMUL #(
     );
 
     always@(*) begin
-        oB <= (iB_buff > sobolseq);
         oMult <= iA & (iB_buff > sobolseq);
     end
 
