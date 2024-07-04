@@ -1,4 +1,4 @@
-
+`ifndef
 `define sobolrng
 `define BITWIDTH8
 
@@ -135,3 +135,5 @@ module sobolrng #(
 
 
 endmodule
+
+`endif

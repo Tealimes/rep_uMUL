@@ -1,4 +1,5 @@
 //Generates position of lsz
+`ifndef cntwithen
 `define cntwithen
 
 module cntwithen #(
@@ -24,3 +25,5 @@ module cntwithen #(
 
 
 endmodule
+
+`endif
